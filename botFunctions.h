@@ -26,7 +26,7 @@ typedef struct location_s
 typedef struct trasmitData
 {
    location_t location;
-   location_t obstacle[10];
+   uint32_t obstacle[5];
    uint32_t speed;
 }transmitData_t;
 

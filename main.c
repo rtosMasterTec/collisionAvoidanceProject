@@ -29,7 +29,12 @@ static void initRobot()
    // Initialize robot
    robotData.botData.location.x = 0;
    robotData.botData.location.y = 0;
-
+   robotData.botData.speed = 0;
+   robotData.botData.obstacle[0] = 0;
+   robotData.botData.obstacle[1] = 0;
+   robotData.botData.obstacle[2] = 0;
+   robotData.botData.obstacle[3] = 0;
+   
    // Test sendData
    sendData(&robotData);
 }

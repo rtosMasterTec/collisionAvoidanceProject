@@ -29,6 +29,16 @@ int sendData(botData_t * botData)
 	strcat(line, buf);
 	snprintf(buf, sizeof(buf), " %d ", robotData->botData.location.y);
 	strcat(line, buf);
+	snprintf(buf, sizeof(buf), " %d ", robotData->botData.speed);
+	strcat(line, buf);
+	snprintf(buf, sizeof(buf), " %d ", robotData->botData.obstacle[0]);
+	strcat(line, buf);
+	snprintf(buf, sizeof(buf), " %d ", robotData->botData.obstacle[1]);
+	strcat(line, buf);
+	snprintf(buf, sizeof(buf), " %d ", robotData->botData.obstacle[2]);
+	strcat(line, buf);
+	snprintf(buf, sizeof(buf), " %d ", robotData->botData.obstacle[3]);
+	strcat(line, buf);
 	strcat(line, " \n");
  
 	// write current position, vel, nextDir and if obstacles present
