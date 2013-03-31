@@ -1,8 +1,10 @@
 
 #include <stdio.h>
-#include "botFunctions.h"
-
+#include "inputVector.h"
+#include <stdint.h>
 int main(int argc, char **argv)
 {
+
+   inputVector();
    return 0;
 }
