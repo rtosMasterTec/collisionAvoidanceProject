@@ -1,7 +1,7 @@
 #include "botFunctions.h"
 
 // Static Variables
-
+int filePos = 0;  // used to seek back to position
 
 /* Send data to interested listeners, position, speed, obstacles */
 int sendData(botData_t * botData)
@@ -70,11 +70,16 @@ int receiveData(botData_t * botData)
                  printf("Couldn't open file!!\n");
                  exit(0);
         }   
-    
+   
+	// move  file ptr to last read position
+//	fseek(fr, filePos, SEEK_SET);
+ 
 	// read subscribed bots for time instant
    	while(fgets(line, 80, fr) != NULL)
 	{   
-		if(0 < strncmp(line," ", 3))
+	
+		
+		if(0 < strncmp(line," ", 3)) //if line at least bigger than empty space, then read
 		{	
 			// split string into tokens
 			ptrChar = strtok_r(line, " ", &ctrlPtr);
@@ -129,6 +134,12 @@ int receiveData(botData_t * botData)
 			printf(" RObst3: %d\n", robotData->botData.obstacle[3]);	
 
 		} //end if
+		else 
+		{   //will read until empty line
+			// now save reading location on file
+			filePos = ftell(fr);			
+			break; //break off the while loop
+		}
 	} // end Reading while
 
 }
