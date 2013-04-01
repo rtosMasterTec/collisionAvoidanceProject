@@ -15,7 +15,7 @@ botData_t robotData;
 
 int main(int argc, char **argv)
 {
-   inputVector();
+//   inputVector();
    
    initRobot();  	
    return 0;
@@ -37,6 +37,8 @@ static void initRobot()
    
    // Test sendData
    sendData(&robotData);
+
+   receiveData(&robotData);
 }
 
 

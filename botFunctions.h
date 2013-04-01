@@ -32,6 +32,7 @@ typedef struct trasmitData
 
 typedef struct botData_s
 {
+   char botName[5];
    transmitData_t botData;
 }botData_t;
 
