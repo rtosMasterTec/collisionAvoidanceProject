@@ -37,9 +37,6 @@ typedef struct botData_s
    transmitData_t botData;
 }botData_t;
 
-
-uint32_t matrixData[TOTAL_BOTS][SIMULATION_TIME];
-
 // send data to the interested listeners, position, speed, obstables, etc.
 int sendData(botData_t * botData);
 
