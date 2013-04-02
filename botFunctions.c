@@ -64,7 +64,7 @@ int receiveData(botData_t * botData)
         robotData = botData;
 
         // Open file ready to append current position and velocity
-        fr = fopen("ram.txt", "r");
+        fr = fopen("vector.txt", "r");
         if (fr == NULL)
         {   
                  printf("Couldn't open file!!\n");
