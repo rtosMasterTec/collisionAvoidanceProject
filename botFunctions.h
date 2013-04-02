@@ -46,7 +46,7 @@ typedef struct botData_s
 }botData_t;
 
 
-extern botData_t * botData;
+//extern botData_t * botData;
 
 // send data to the interested listeners, position, speed, obstables, etc.
 void* sendData(void* ptr);

@@ -4,7 +4,7 @@
 #include "inputVector.h"
 
 // Local Functions
-static void initRobot();
+//static void initRobot();
 static void print3dArray();
 
 // Init Variables
@@ -13,28 +13,14 @@ static void print3dArray();
 int main(int argc, char **argv)
 {
    initRobot();  	
-   return scheduler();
-}
-
-static void initRobot()
-{
-   // Initialize struct
-  // memset(&robotData, 0, sizeof(botData_t));
-
-   
    loadVector();
-   //mcastSubscribe(40, &robotData);
-    
     //print something from vector to check it was read correctly
                              //[timeInst][RX][Data 0-8: Rx X Y Sp Dir ObstN ObstW ObstE ObstS]
     printf("Check timeInst 1, R2 = %d\n", timeInstMatrix[40][1][0]);
-    printf("Check timeInst 1, X = %d\n", timeInstMatrix[40][1][1]);
-    printf("Check timeInst 1, Y = %d\n", timeInstMatrix[40][1][2]);
-
-  //  printf("Printing read 3d array\n");
-   // print3dArray();
-
+   
+return scheduler();
 }
+
 
 static void print3dArray()
 {

@@ -13,17 +13,22 @@ int obstacleMap[NUM_OBST][COORD] =
     {80, 50, 82, 60}, {87, 45, 88, 46} , {100, 54, 105, 55}, {122, 58, 127, 61} 
 };
 
+/* Initializes R0 starting point in the grid */
 int initRobot() 
 {
+    memset(&botData, 0, sizeof(botData_t));
+
     // Initialize robot
-    botData->botData.location.x = 0;
-    botData->botData.location.y = 0;
+printf("\n ATTN: Getting seg fault If next line is not commented\n");
+//    botData->botData.location.x = 0;
+printf("ATTN: Not getting here is previous line not commented\n");
+  /*  botData->botData.location.y = 0;
     botData->botData.speed = 0;
     strcpy(botData->botData.direction,"E");
     botData->botData.obstacle[0] = 0;
     botData->botData.obstacle[1] = 0;
     botData->botData.obstacle[2] = 0;
-    botData->botData.obstacle[3] = 0;
+    botData->botData.obstacle[3] = 0; */
 }
  
 /* Send data to interested listeners, position, speed, obstacles */
