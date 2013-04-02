@@ -135,7 +135,6 @@ void* mcastUnSubscribe(void* ptr)
 
 void* decisionMaking(void* ptr)
 {
-
     int j = 0;
     int currentTimeInst = 4; // This is a global variable, will move later
     bool collision = false;
@@ -161,10 +160,34 @@ void* decisionMaking(void* ptr)
                   {
                         // If true we are going to collide, change direction, nextMoveX and nextMoveY
                         changeDirection();
+                        if(exitFunc == 1) { return 0; } // exiting and not moving
                         break;
                   }
                 } 
-            }
+               case E:
+                {  // East means adding X+1
+                  if((timeInstMatrix[currentTimeInst][j][1]+1 == nextMoveX)
+                         && (timeInstMatrix[currentTimeInst][j][2] == nextMoveY))
+                  {
+                        // If true we are going to collide, change direction, nextMoveX and nextMoveY
+                        changeDirection();
+                        if(exitFunc == 1) { return 0; } // exiting and not moving
+                        break;
+                  }
+                } 
+               case S:
+                {  // South means substracting Y-1
+                  if((timeInstMatrix[currentTimeInst][j][1] == nextMoveX)
+                         && (timeInstMatrix[currentTimeInst][j][2]-1 == nextMoveY))
+                  {
+                        // If true we are going to collide, change direction, nextMoveX and nextMoveY
+                        changeDirection();
+                        if(exitFunc == 1) { return 0; } // exiting and not moving
+                        break;
+                  }
+                } 
+
+            } // end switch
 
         } // end if
 
@@ -200,6 +223,8 @@ void static changeDirection()
 void *dataProcessing(void* ptr)
 {
 }
+
 void* dataSelection(void* ptr)
 {
-}
+} 
+
