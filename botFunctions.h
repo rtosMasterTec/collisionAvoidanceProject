@@ -20,8 +20,9 @@
 #define MAX_RANGE_X 10
 #define COORD 4 // X Y X Y
 
-int obstacleMap[NUM_OBST][COORD];
+extern int obstacleMap[NUM_OBST][COORD];
 int subscribeArr[TOTAL_BOTS];
+
 
 typedef struct location_s
 {
@@ -43,6 +44,9 @@ typedef struct botData_s
    char botName[4];
    transmitData_t botData;
 }botData_t;
+
+
+extern botData_t * botData;
 
 // send data to the interested listeners, position, speed, obstables, etc.
 void* sendData(void* ptr);

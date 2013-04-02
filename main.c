@@ -8,7 +8,7 @@ static void initRobot();
 static void print3dArray();
 
 // Init Variables
-botData_t robotData;
+//botData_t robotData;
 
 int main(int argc, char **argv)
 {
@@ -19,20 +19,9 @@ int main(int argc, char **argv)
 static void initRobot()
 {
    // Initialize struct
-   memset(&robotData, 0, sizeof(botData_t));
+  // memset(&robotData, 0, sizeof(botData_t));
 
-   // Initialize robot
-   robotData.botData.location.x = 0;
-   robotData.botData.location.y = 0;
-   robotData.botData.speed = 0;
-   strcpy(robotData.botData.direction,"E");
-   robotData.botData.obstacle[0] = 0;
-   robotData.botData.obstacle[1] = 0;
-   robotData.botData.obstacle[2] = 0;
-   robotData.botData.obstacle[3] = 0;
    
-   // Test sendData
-   sendData(&robotData);
    loadVector();
    //mcastSubscribe(40, &robotData);
     

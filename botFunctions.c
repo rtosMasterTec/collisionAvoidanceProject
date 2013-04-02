@@ -12,18 +12,32 @@ int obstacleMap[NUM_OBST][COORD] =
 {  // X  Y  X  Y 
     {80, 50, 82, 60}, {87, 45, 88, 46} , {100, 54, 105, 55}, {122, 58, 127, 61} 
 };
+
+int initRobot() 
+{
+    // Initialize robot
+    botData->botData.location.x = 0;
+    botData->botData.location.y = 0;
+    botData->botData.speed = 0;
+    strcpy(botData->botData.direction,"E");
+    botData->botData.obstacle[0] = 0;
+    botData->botData.obstacle[1] = 0;
+    botData->botData.obstacle[2] = 0;
+    botData->botData.obstacle[3] = 0;
+}
  
 /* Send data to interested listeners, position, speed, obstacles */
 void* sendData(void* ptr)
 {
+ printf("SendingData() started\n");
    // variables
-   botData_t * robotData;
+//   botData_t * robotData;
    FILE *fwa;
    char line[80];
    char buf[6]; // buffer to store integer conversions
 
-   memset(&robotData, 0, sizeof(botData_t));
-   robotData = botData;
+  // memset(&robotData, 0, sizeof(botData_t));
+  // robotData = botData;
 
    // Open file ready to append current position and velocity
    fwa = fopen("ourBotData.txt", "a+");
@@ -35,25 +49,29 @@ void* sendData(void* ptr)
 
    // preapare string = posx pos y vel obstN obtsW obstE obstS
    strcpy(line,"R0");
-   snprintf(buf, sizeof(buf), " %d ", robotData->botData.location.x);
+   snprintf(buf, sizeof(buf), " %d ", botData->botData.location.x);
    strcat(line, buf);
-   snprintf(buf, sizeof(buf), " %d ", robotData->botData.location.y);
+   snprintf(buf, sizeof(buf), " %d ", botData->botData.location.y);
    strcat(line, buf);
-   snprintf(buf, sizeof(buf), " %d ", robotData->botData.speed);
+   snprintf(buf, sizeof(buf), " %d ", botData->botData.speed);
    strcat(line, buf);
-   snprintf(buf, sizeof(buf), " %d ", robotData->botData.obstacle[0]);
+   strcpy(line, botData->botData.direction);
    strcat(line, buf);
-   snprintf(buf, sizeof(buf), " %d ", robotData->botData.obstacle[1]);
+   snprintf(buf, sizeof(buf), " %d ", botData->botData.obstacle[0]);
    strcat(line, buf);
-   snprintf(buf, sizeof(buf), " %d ", robotData->botData.obstacle[2]);
+   snprintf(buf, sizeof(buf), " %d ", botData->botData.obstacle[1]);
    strcat(line, buf);
-   snprintf(buf, sizeof(buf), " %d ", robotData->botData.obstacle[3]);
+   snprintf(buf, sizeof(buf), " %d ", botData->botData.obstacle[2]);
+   strcat(line, buf);
+   snprintf(buf, sizeof(buf), " %d ", botData->botData.obstacle[3]);
    strcat(line, buf);
    strcat(line, " \n");
 
    // write current position, vel, nextDir and if obstacles present
    fprintf(fwa, "%s", line);
    fclose(fwa);  /* close the file */
+   
+ printf("SendingData() correctly run\n");
 
 }
 
@@ -80,11 +98,13 @@ void* receiveData(void *ptr)
                  printf("Couldn't open file!!\n");
                  exit(0);
         }  */ 
+    printf("receivingData() correctly run\n");
 }
 
 void* mcastSubscribe(void* ptr)
 {
-   int j;
+ printf("mcastSubscribe() started\n");
+  int j;
    int my_coord_x;
    int my_coord_y;
    int coord_x;
@@ -105,10 +125,12 @@ void* mcastSubscribe(void* ptr)
 	subscribeArr[j] = 1;
      }
    }
+    printf("mcastSubscribe() correctly run\n");
 }
 
 void* mcastUnSubscribe(void* ptr)
 {
+ printf("mcastUnSubscribe() started\n");
    int j;
    int my_coord_x;
    int my_coord_y;
@@ -130,11 +152,13 @@ void* mcastUnSubscribe(void* ptr)
         subscribeArr[j] = 0;
      }
    }
+    printf("mcastUnSubscribe() correctly run\n");
 }
 
 
 void* decisionMaking(void* ptr)
 {
+ printf("decisionMaking() started\n");
     int j = 0;
     int currentTimeInst = 4; // This is a global variable, will move later
     bool collision = false;
@@ -192,6 +216,7 @@ void* decisionMaking(void* ptr)
         } // end if
 
     } // end for
+    printf("decisionMaking() correctly run\n");
 
 } // end decisionMaking
 
@@ -222,9 +247,11 @@ void static changeDirection()
 
 void *dataProcessing(void* ptr)
 {
+    printf("dataProcessing() correctly run\n");
 }
 
 void* dataSelection(void* ptr)
 {
+    printf("dataSelection() correctly run\n");
 } 
 
