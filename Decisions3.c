@@ -858,7 +858,7 @@ void readfile (void) {
 }
 
 
-main()
+/*main()
 
 {
     posX = 2;
@@ -903,4 +903,4 @@ main()
 
     readfile();
 
-} /*of main*/
+}*/ 

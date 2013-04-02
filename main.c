@@ -12,7 +12,7 @@ static void print3dArray();
 
 // Init Variables
 botData_t robotData;
-int timeInstMatrix[TIME_INSTANTS][TOTAL_BOTS][9];
+//int timeInstMatrix[TIME_INSTANTS][TOTAL_BOTS][9];
 
 int main(int argc, char **argv)
 {
