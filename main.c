@@ -3,12 +3,12 @@
 
 #include <stdio.h>
 #include <stdint.h>
-#include "inputVector.h"
 #include "botFunctions.h"
+#include "inputVector.h"
 
 // Local Functions
 static void initRobot();
-
+static void print3dArray();
 
 // Init Variables
 botData_t robotData;
@@ -37,9 +37,36 @@ static void initRobot()
    
    // Test sendData
    sendData(&robotData);
+   loadVector();
+    
+    //print something from vector to check it was read correctly
+    printf("Check timeInst 1, R2 = %d\n", timeInstMatrix[1][1][0]);
+    printf("Check timeInst 1, X = %d\n", timeInstMatrix[1][1][1]);
+    printf("Check timeInst 1, Y = %d\n", timeInstMatrix[1][1][2]);
 
-   receiveData(&robotData);
+//    printf("Printing read 3d array\n");
+//    print3dArray();
+
 }
 
+static void print3dArray()
+{
+    int i = 0;
+    int j = 0;
+    int k = 0;
 
+    for(i = 0; i < TIME_INSTANTS; i++)
+    {
+        for(j = 0; j < TOTAL_BOTS; j++)
+        {
+            for(k = 0; k < 9; k++)
+            {
+                printf(" %d " , timeInstMatrix[i][j][k]);
+            }
+            printf("\n");
+        }
+        printf("\n");
+    }
+
+}
 

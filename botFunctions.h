@@ -14,7 +14,8 @@
 #define MAX_X 1200
 #define MAX_Y 800
 #define SIMULATION_TIME 100
-#define TOTAL_BOTS 100
+#define TOTAL_BOTS 3   
+#define TIME_INSTANTS 41
 
 typedef struct location_s
 {
@@ -28,11 +29,12 @@ typedef struct trasmitData
    location_t location;
    uint32_t obstacle[5];
    uint32_t speed;
+   char direction[3];
 }transmitData_t;
 
 typedef struct botData_s
 {
-   char botName[5];
+   char botName[4];
    transmitData_t botData;
 }botData_t;
 
