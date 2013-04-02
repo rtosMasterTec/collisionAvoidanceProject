@@ -12,12 +12,9 @@ static void print3dArray();
 
 // Init Variables
 botData_t robotData;
-//int timeInstMatrix[TIME_INSTANTS][TOTAL_BOTS][9];
 
 int main(int argc, char **argv)
 {
-//   inputVector();
-   
    initRobot();  	
    return 0;
 }
@@ -47,8 +44,8 @@ static void initRobot()
     printf("Check timeInst 1, X = %d\n", timeInstMatrix[40][1][1]);
     printf("Check timeInst 1, Y = %d\n", timeInstMatrix[40][1][2]);
 
-   printf("Printing read 3d array\n");
-    print3dArray();
+  //  printf("Printing read 3d array\n");
+   // print3dArray();
 
 }
 
