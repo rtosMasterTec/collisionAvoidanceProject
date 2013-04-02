@@ -70,13 +70,10 @@ int receiveData(botData_t * botData)
         {   
                  printf("Couldn't open file!!\n");
                  exit(0);
-        }   
-  */ 
-
+        }  */ 
 }
 
 int mcastSubscribe(int timeInst, botData_t * botData){
-
    int j;
    int my_coord_x;
    int my_coord_y;
@@ -118,4 +115,16 @@ int mcastUnSubscribe(int timeInst, botData_t * botData){
         suscribeArr[j] = 0;
      }
    }
+}
+
+
+int decisionMaking()
+{
+
+
+//empty for now
+
+
+
+
 }
