@@ -12,6 +12,7 @@ static void print3dArray();
 
 // Init Variables
 botData_t robotData;
+int timeInstMatrix[TIME_INSTANTS][TOTAL_BOTS][9];
 
 int main(int argc, char **argv)
 {
@@ -30,6 +31,7 @@ static void initRobot()
    robotData.botData.location.x = 0;
    robotData.botData.location.y = 0;
    robotData.botData.speed = 0;
+   strcpy(robotData.botData.direction,"E");
    robotData.botData.obstacle[0] = 0;
    robotData.botData.obstacle[1] = 0;
    robotData.botData.obstacle[2] = 0;
@@ -40,6 +42,7 @@ static void initRobot()
    loadVector();
     
     //print something from vector to check it was read correctly
+                             //[timeInst][RX][Data 0-8: Rx X Y Sp Dir ObstN ObstW ObstE ObstS]
     printf("Check timeInst 1, R2 = %d\n", timeInstMatrix[1][1][0]);
     printf("Check timeInst 1, X = %d\n", timeInstMatrix[1][1][1]);
     printf("Check timeInst 1, Y = %d\n", timeInstMatrix[1][1][2]);

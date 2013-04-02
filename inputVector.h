@@ -19,7 +19,7 @@
 
 extern int timeInstMatrix[TIME_INSTANTS][TOTAL_BOTS][9];  
 
-void loadVector(void);
+void loadVector();
 
 #endif // __inputVector__h__
 

@@ -1,8 +1,8 @@
 #include "inputVector.h"
-#include "botFunctions.h"
+//#include "botFunctions.h"
 
-int timeInstMatrix[TIME_INSTANTS][TOTAL_BOTS][9];/* =
- {   {   {R1, 1, 2, 10, N, 1, 0, 1, 0},
+//int timeInstMatrix[TIME_INSTANTS][TOTAL_BOTS][9]; //=
+/* {   {   {R1, 1, 2, 10, N, 1, 0, 1, 0},
          {R2, 4, 6, 10, E, 1, 0, 1, 0},
          {R3, 4, 3, 10, S, 1, 0, 1, 0}
      },
