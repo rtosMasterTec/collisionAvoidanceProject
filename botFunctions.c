@@ -2,9 +2,17 @@
 #include "inputVector.h"
 
 // Static Variables
-int filePos = 0;  // used to seek back to position
 botData_t * botData;
+int move = E;  // move east is defautl behavior
+int exitFunc = 0;
+int nextMoveX = 0;
+int nextMoveY = 0;
 
+int obstacleMap[NUM_OBST][COORD] =
+{  // X  Y  X  Y 
+    {80, 50, 82, 60}, {87, 45, 88, 46} , {100, 54, 105, 55}, {122, 58, 127, 61} 
+};
+ 
 /* Send data to interested listeners, position, speed, obstacles */
 void* sendData(void* ptr)
 {
@@ -94,7 +102,7 @@ void* mcastSubscribe(void* ptr)
      if(my_coord_x - coord_x < MAX_RANGE_X)
      {
  	//suscribe
-	suscribeArr[j] = 1;
+	subscribeArr[j] = 1;
      }
    }
 }
@@ -119,7 +127,7 @@ void* mcastUnSubscribe(void* ptr)
      if(my_coord_x - coord_x >= MAX_RANGE_X)
      {
         //Unsuscribe
-        suscribeArr[j] = 0;
+        subscribeArr[j] = 0;
      }
    }
 }
@@ -128,13 +136,66 @@ void* mcastUnSubscribe(void* ptr)
 void* decisionMaking(void* ptr)
 {
 
+    int j = 0;
+    int currentTimeInst = 4; // This is a global variable, will move later
+    bool collision = false;
 
-//empty for now
+    nextMoveX = botData->botData.location.x + 1;
+    nextMoveY = botData->botData.location.y;
 
+    // Check if obstacles are in my next move
 
+    // Check if other robots are in my way
+    for(j = 0; j < TOTAL_BOTS; j++)
+    {
 
+        if(subscribeArr[j] == 1)
+        {
+            // check I can move East
+            switch(timeInstMatrix[currentTimeInst][j][4])
+            {
+               case N:
+                {  // North means adding Y+1
+                  if((timeInstMatrix[currentTimeInst][j][1] == nextMoveX)
+                         && (timeInstMatrix[currentTimeInst][j][2]+1 == nextMoveY))
+                  {
+                        // If true we are going to collide, change direction, nextMoveX and nextMoveY
+                        changeDirection();
+                        break;
+                  }
+                } 
+            }
+
+        } // end if
+
+    } // end for
+
+} // end decisionMaking
+
+void static changeDirection()
+{
+    // Try E --> Try N --> Try W or Wait    
+
+    if(move == E)
+    { //try North
+       move = N;
+       nextMoveX = botData->botData.location.x;
+       nextMoveY = botData->botData.location.y + 1; 
+    }
+    else if (move == N)
+    { //try South 
+       move = S;
+       nextMoveX = botData->botData.location.x;
+       nextMoveY = botData->botData.location.y - 1; 
+    }
+    else
+    { // tried E,N, S, not gonna try W (going back) so just wait.
+        exitFunc = 1;      
+    }
 
 }
+
+
 
 void *dataProcessing(void* ptr)
 {

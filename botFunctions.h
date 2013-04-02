@@ -7,6 +7,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "scheduler.h"
+
 // Data structures
 
 // assumed the bot size is 1 unit in length and width
@@ -15,9 +16,12 @@
 #define MAX_Y 800
 #define TOTAL_BOTS 3   
 #define TIME_INSTANTS 41
+#define NUM_OBST 4
 #define MAX_RANGE_X 10
+#define COORD 4 // X Y X Y
 
-int suscribeArr[TOTAL_BOTS];
+int obstacleMap[NUM_OBST][COORD];
+int subscribeArr[TOTAL_BOTS];
 
 typedef struct location_s
 {
@@ -43,7 +47,6 @@ typedef struct botData_s
 // send data to the interested listeners, position, speed, obstables, etc.
 void* sendData(void* ptr);
 
-
 // receive data from liek  position, speed, obstables, etc from members I have subscribed
 void* receiveData(void* ptr);
 
@@ -52,8 +55,6 @@ void* mcastSubscribe(void* ptr);
 
 // makes the unsubscriptions
 void* mcastUnSubscribe(void* ptr);
-
-// selects the near neighbors to subscribe to their transmitted data
 void* dataSelection(void* ptr);
 
 // process the data from selected bots
@@ -62,8 +63,6 @@ void* dataProcessing(void* ptr);
 // makes decision based on processed data
 void* decisionMaking(void* ptr);
 
-
-
-
+void static changeDirection(void);
 
 #endif // __botFunctions__h__
