@@ -26,7 +26,28 @@ import sys
 #
 
 obstacles = []
+dynamicBotMap={}
 scale = 6
+
+def vectorLoad():
+   file = open(sys.argv[2])
+   lines = (line.rstrip() for line in file) 
+   lines = list(line for line in lines if line) #remove blanks
+   lines = list(line for line in lines if line[0] != "#") #remove comments
+   for line in lines:
+      contents = "x y velocidad direccion n o s e".split()
+
+      line = line.split()
+      bot = line.pop(0)
+      d = dict( zip( contents, line))
+      for content in d.iterkeys():
+         if content == "direccion":
+            continue
+         d[content] = int(d[content])
+         if bot not in dynamicBotMap:
+# each bot label contains a list of time related info
+            dynamicBotMap[bot] = [] 
+         dynamicBotMap[bot].append( d )
 
 def mapLoad(screen):
    """This opens a file given by the console input"""
@@ -55,7 +76,8 @@ def mapLoad(screen):
 def simulation():
    pygame.init()
    screen = pygame.display.set_mode((800, 800))
-   mapLoad(screen);
+   mapLoad(screen)
+   vectorLoad()
 
    done = False
    x = 30
@@ -64,15 +86,22 @@ def simulation():
       for event in pygame.event.get():
          if event.type == pygame.QUIT:
             done = True
-      time.sleep(0.1)
-      #screen.fill((0, 0, 0))
-      pygame.draw.rect(screen, (0, 0, 0), pygame.Rect(x, y, scale,scale ))
-      pygame.draw.rect(screen, (0, 128, 0), pygame.Rect(x, y, scale/2,scale/2 ))
-      x+=scale;
-      y+=scale;
-      pygame.draw.rect(screen, (0, 255, 0), pygame.Rect(x, y, scale, scale))
-      pygame.draw.rect(screen, (0, 255, 0), pygame.Rect(50, 100, scale, scale))
-      pygame.display.flip()
+      time.sleep(0.5)
+#      #screen.fill((0, 0, 0))
+#      pygame.draw.rect(screen, (0, 0, 0), pygame.Rect(x, y, scale,scale ))
+#      pygame.draw.rect(screen, (0, 128, 0), pygame.Rect(x, y, scale/2,scale/2 ))
+#      x+=scale;
+#      y+=scale;
+#      pygame.draw.rect(screen, (0, 255, 0), pygame.Rect(x, y, scale, scale))
+#      pygame.draw.rect(screen, (0, 255, 0), pygame.Rect(50, 100, scale, scale))
+#      pygame.display.flip()
+      for t in range(len(dynamicBotMap["R1"])):
+         for bot in dynamicBotMap.iterkeys():
+            #print dynamicBotMap[bot]
+            x = dynamicBotMap[bot][t]["x"]
+            y = dynamicBotMap[bot][t]["y"]
+            pygame.draw.rect(screen, (0, 255, 0), pygame.Rect(x*scale, y*scale, scale, scale))
+            pygame.display.flip()
 
 if __name__ == "__main__":
    #mapLoad()

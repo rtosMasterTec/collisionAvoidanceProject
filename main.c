@@ -43,9 +43,11 @@ static void initRobot()
     
     //print something from vector to check it was read correctly
                              //[timeInst][RX][Data 0-8: Rx X Y Sp Dir ObstN ObstW ObstE ObstS]
-    printf("Check timeInst 1, R2 = %d\n", timeInstMatrix[1][1][0]);
-    printf("Check timeInst 1, X = %d\n", timeInstMatrix[1][1][1]);
-    printf("Check timeInst 1, Y = %d\n", timeInstMatrix[1][1][2]);
+
+   print3dArray();
+//    printf("Check timeInst 1, R2 = %d\n", timeInstMatrix[1][1][0]);
+//    printf("Check timeInst 1, X = %d\n", timeInstMatrix[1][1][1]);
+//    printf("Check timeInst 1, Y = %d\n", timeInstMatrix[1][1][2]);
 
 //    printf("Printing read 3d array\n");
 //    print3dArray();

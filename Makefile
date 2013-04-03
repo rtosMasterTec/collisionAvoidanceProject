@@ -20,7 +20,10 @@ TARGETNAME      := main.exec
 # ---> Compileroptions
 CC              := gcc
 CXX             := g++
-CFLAGS          := 
+#CFLAGS          := pth-config --cflags
+CFLAGS  = `pth-config --cflags`
+LFLAGS  = `pth-config --ldflags`
+LIBS    = `pth-config --libs`
 #CFLAGS          := -Wall -W -g -DDEBUG -D_REENTRANT -std=c99
 #CFLAGS          := -pipe -mcpu=i686 -march=i686 -O3 -fomit-frame-pointer -Wall -W -g -DDEBUG -D_REENTRANT
 #CXXFLAGS        := -pipe -mcpu=i686 -march=i686 -O3 -fno-rtti -Wall -W -g -DDEBUG -D_REENTRANT
@@ -29,9 +32,9 @@ CXXFLAGS        := -pipe -O3 -fno-rtti -Wall -W -g -D_REENTRANT -DPATH2CONF=\"Sc
 INCPATH         := #-I/home/xyz/usr/include/jpeg-6b
 # ---> Linkeroptions
 LINK            := gcc
-LFLAGS          :=  # -fPIC
-LIBS            := #-lncurses #-ljpeg #-lpthread -ldl
-LIBPATH         := -L/home/xyz/usr/lib64/
+#LFLAGS          := pth-config --ldflags # -fPIC
+#LIBS            := pth-config --libs #-llibpth20#-lncurses #-ljpeg #-lpthread -ldl
+#LIBPATH         := -L/home/xyz/usr/lib64/
 # ---> Options for a shared library
 SHARE_LIB_FLAG  := -shared -W1,-soname,
 SHARE_COMP_FLAG := -fPIC
