@@ -88,4 +88,5 @@ void* decisionMaking(void* ptr);
 
 void static changeDirection(void);
 
+int static updateRobot(void);
 #endif // __botFunctions__h__

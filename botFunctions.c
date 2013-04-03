@@ -276,6 +276,9 @@ void *dataProcessing(void* ptr)
 
       } // end if
 
+    // update
+    updateRobot();
+
    } // end for
     printf("dataProcessing() correctly run\n");
 }
@@ -284,4 +287,20 @@ void* dataSelection(void* ptr)
 {
     printf("dataSelection() correctly run\n");
 } 
+
+int updateRobot() 
+{
+
+    // Initialize robot
+    botData.botData.location.x = nextMoveX;
+    botData.botData.location.y = nextMoveY;
+    botData.botData.speed = 0;
+    if(move == N) {  strcpy(botData.botData.direction, "N");};
+    if(move == S) {  strcpy(botData.botData.direction, "S");};
+    if(move == E) {  strcpy(botData.botData.direction, "E");};
+    botData.botData.obstacle[0] = 0;
+    botData.botData.obstacle[1] = 0;
+    botData.botData.obstacle[2] = 0;
+    botData.botData.obstacle[3] = 0;  
+}
 
