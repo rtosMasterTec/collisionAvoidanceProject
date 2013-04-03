@@ -1,6 +1,4 @@
 #include <stdio.h>   /* required for file operations */
-#include <conio.h>  /* for clrscr */
-#include <dos.h>  /* for delay */
 #include <time.h>
 #include <stdbool.h>
 
