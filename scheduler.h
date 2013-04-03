@@ -8,6 +8,8 @@
 
 // variables
 unsigned timeInst; // global to synchronize time accross tasks
+unsigned dataCollectionCtr; // global used to count robots processed
+
 // constants
 #define MAX_THREADS 7
 
