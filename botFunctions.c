@@ -241,7 +241,7 @@ void *dataProcessing(void* ptr)
       if(subscribeArr[j] == 1)
       { 
             dataCollectionCtr++;  // used for data colleciton purposes
-            if(timeInst == 41) { printf("DataCollection Bots processed = %d\n", dataCollectionCtr); };
+            if(timeInst == TIME_INSTANTS) { printf("DataCollection Bots processed = %d\n", dataCollectionCtr); };
         
           // check I can move East
          switch(timeInstMatrix[currentTimeInst][j][4])
