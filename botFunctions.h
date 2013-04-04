@@ -60,11 +60,10 @@ typedef struct botData_s
 
 typedef struct obstacle_s
 {
-   bool N;
-   bool S;
-   bool E;
+   bool n;
+   bool s;
+   bool e;
 } obstacle_t;
-
 
 extern botData_t botData;
 
