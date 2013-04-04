@@ -2,6 +2,7 @@
 
 //variables
 unsigned timeInst; // global to synchronize time accross tasks
+unsigned dataCollectionCtr; // global used to count robots processed
 
 volatile pth_t pt[MAX_THREADS]; // this is volatile to not let the compiler assume anything about the value
 
@@ -17,6 +18,7 @@ int scheduler(void)
    int i;
 
    timeInst = 0; // beggining at time 0
+   dataCollectionCtr = 0;
    pth_ret = pth_init();
    if (pth_ret != TRUE) 
    {
@@ -46,7 +48,7 @@ int scheduler(void)
       if(timeInst >=61) {return;}
       timeInst++;// inc time to proceed to next batch of data
    }
-
+    
    return(EXIT_SUCCESS);
  }
 // thread examples

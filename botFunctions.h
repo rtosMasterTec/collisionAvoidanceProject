@@ -23,8 +23,13 @@
 // these are the limits of the simulation space
 #define MAX_X 1200
 #define MAX_Y 800
+<<<<<<< HEAD
 #define TOTAL_BOTS 3   
 #define TIME_INSTANTS 61
+=======
+#define TOTAL_BOTS 8   
+#define TIME_INSTANTS 41
+>>>>>>> 7586b2aae9cf0a6d3ea5901c3712ada02b4065d0
 #define NUM_OBST 4
 #define MAX_RANGE_X 10
 #define COORD 4 // X Y X Y
