@@ -29,8 +29,8 @@ obstacles = []
 dynamicBotMap={}
 scale = 6
 
-def vectorLoad():
-   file = open(sys.argv[2])
+def vectorLoad(fname):
+   file = open(fname)
    lines = (line.rstrip() for line in file) 
    lines = list(line for line in lines if line) #remove blanks
    lines = list(line for line in lines if line[0] != "#") #remove comments
@@ -65,8 +65,8 @@ def mapLoad(screen):
    for object in obstacles:
       xi= object["xi"]
       yi = object["yi"]
-      dx = object["xf"] - object["xi"]
-      dy = object["yf"] - object["yi"]
+      dx = object["xf"] - object["xi"] +1
+      dy = object["yf"] - object["yi"] +1
       xi= xi*scale
       yi= yi*scale
       dx = dx*scale
@@ -77,7 +77,8 @@ def simulation():
    pygame.init()
    screen = pygame.display.set_mode((800, 800))
    mapLoad(screen)
-   vectorLoad()
+   vectorLoad(sys.argv[2])
+   vectorLoad(sys.argv[3])
 
    done = False
    x = 30
@@ -87,7 +88,6 @@ def simulation():
          if event.type == pygame.QUIT:
             done = True
       time.sleep(0.5)
-#      #screen.fill((0, 0, 0))
 #      pygame.draw.rect(screen, (0, 0, 0), pygame.Rect(x, y, scale,scale ))
 #      pygame.draw.rect(screen, (0, 128, 0), pygame.Rect(x, y, scale/2,scale/2 ))
 #      x+=scale;
@@ -95,13 +95,40 @@ def simulation():
 #      pygame.draw.rect(screen, (0, 255, 0), pygame.Rect(x, y, scale, scale))
 #      pygame.draw.rect(screen, (0, 255, 0), pygame.Rect(50, 100, scale, scale))
 #      pygame.display.flip()
+      #print dynamicBotMap
+      screen.fill((0,0,0))
+      mapLoad(screen)
       for t in range(len(dynamicBotMap["R1"])):
+         print "t = %d" % t
+         for bot in dynamicBotMap.iterkeys():
+
+            x = dynamicBotMap[bot][t]["x"]
+            y = dynamicBotMap[bot][t]["y"]
+            if(bot == "R0"):
+               color = (255, 0,0)
+            else:
+               color = (0, 255,0)
+            pygame.draw.rect(screen, color, pygame.Rect(x*scale, y*scale, scale, scale))
+         pygame.display.flip()
+
+         # erase last position
+         #time.sleep(0.5)
          for bot in dynamicBotMap.iterkeys():
             #print dynamicBotMap[bot]
             x = dynamicBotMap[bot][t]["x"]
             y = dynamicBotMap[bot][t]["y"]
-            pygame.draw.rect(screen, (0, 255, 0), pygame.Rect(x*scale, y*scale, scale, scale))
-            pygame.display.flip()
+            color = (0, 0,0)
+            pygame.draw.rect(screen, color, pygame.Rect(x*scale, y*scale, scale, scale))
+         #give a mark of last position
+         for bot in dynamicBotMap.iterkeys():
+            #print dynamicBotMap[bot]
+            x = dynamicBotMap[bot][t]["x"]
+            y = dynamicBotMap[bot][t]["y"]
+            if(bot == "R0"):
+               color = (255, 0,0)
+            else:
+               color = (0, 255,0)
+            pygame.draw.rect(screen, color, pygame.Rect(x*scale, y*scale, 2, 2))
 
 if __name__ == "__main__":
    #mapLoad()
