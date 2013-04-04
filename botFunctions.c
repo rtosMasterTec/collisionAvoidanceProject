@@ -126,12 +126,12 @@ void* mcastSubscribe(void* ptr)
          subscribeArr[j] = 1;
       }
    }
-            printf("mcastSubscribe() correctly run\n");
-            }
+   printf("mcastSubscribe() correctly run\n");
+}
 
 void* mcastUnSubscribe(void* ptr)
 {
- printf("mcastUnSubscribe() started\n");
+   printf("mcastUnSubscribe() started\n");
    int j;
    int my_coord_x;
    int my_coord_y;
@@ -144,105 +144,162 @@ void* mcastUnSubscribe(void* ptr)
    printf("My position R%d = X=%d,Y=%d\n",0 ,my_coord_x,my_coord_y);
    for(j=1; j<= TOTAL_BOTS; j++)
    {
-     coord_x = timeInstMatrix[timeInst][j][1];
-     coord_y = timeInstMatrix[timeInst][j][2];
-     printf("Check position of robot R%d = X=%d,Y=%d\n",j ,coord_x,coord_y);
-     if(my_coord_x - coord_x >= MAX_RANGE_X)
-     {
-        //Unsuscribe
-        subscribeArr[j] = 0;
-     }
+      coord_x = timeInstMatrix[timeInst][j][1];
+      coord_y = timeInstMatrix[timeInst][j][2];
+      printf("Check position of robot R%d = X=%d,Y=%d\n",j ,coord_x,coord_y);
+      if(my_coord_x - coord_x >= MAX_RANGE_X)
+      {
+         //Unsuscribe
+         subscribeArr[j] = 0;
+      }
    }
-    printf("mcastUnSubscribe() correctly run\n");
+   printf("mcastUnSubscribe() correctly run\n");
 }
 
 
 void* decisionMaking(void* ptr)
 {
- printf("decisionMaking() started\n");
-    int j = 0;
-    int currentTimeInst = 4; // This is a global variable, will move later
-    bool collision = false;
+   printf("decisionMaking() started\n");
+   int j = 0;
+   int currentTimeInst = 4; // This is a global variable, will move later
+   bool collision = false;
+   int xi, yi, xf, yf,i;
+   obstacle_t obstacle;
 
-    nextMoveX = botData.botData.location.x + 1;
-    nextMoveY = botData.botData.location.y;
 
-    // Check if obstacles are in my next move
+   // Check if obstacles are in my next move
+   xactual = botData.botData.location.x;
+   yactual = botData.botData.location.y;
 
-    // Check if other robots are in my way
-    for(j = 0; j < TOTAL_BOTS; j++)
-    {
+   obstacle.N = 0;
+   obstacle.S = 0;
+   obstacle.E = 0;
 
-        if(subscribeArr[j] == 1)
-        {
-            // check I can move East
-            switch(timeInstMatrix[currentTimeInst][j][4])
-            {
-               case N:
-                {  // North means adding Y+1
+   // this emulates sensor reads to detect static obstacles
+   for( i = 0; i < NUM_OBST ; i++)
+   {
+      xi = obstacleMap[i][0];
+      yi = obstacleMap[i][1];
+      xf = obstacleMap[i][2];
+      yf = obstacleMap[i][3];
+      // check for collision at north
+      if( xactual >= xi && xactual <= xf && yactual+1 >= yi && yactual+1 <= yf)
+      {
+         obstacle.N = true;
+      }
+      // collision at east
+      if( xactual+1 >= xi && xactual+1 <= xf && yactual >= yi && yactual <= yf)
+      {
+         obstacle.E = true;
+      }
+      // collision at south
+      if( xactual-1 >= xi && xactual-1 <= xf && yactual >= yi && yactual <= yf)
+      {
+         obstacle.S = true;
+      }
+   }
+
+   nextMoveX = botData.botData.location.x + 1;
+   nextMoveY = botData.botData.location.y;
+   // Check if other robots are in my way
+   for(j = 0; j < TOTAL_BOTS; j++)
+   {
+
+      if(subscribeArr[j] == 1)
+      {
+         if( obstacle.E == true)
+         {
+            move = N;
+         }
+         // check I can move East
+         switch(timeInstMatrix[currentTimeInst][j][4])
+         {
+            case N:
+               {  // North means adding Y+1
+
                   if((timeInstMatrix[currentTimeInst][j][1] == nextMoveX)
-                         && (timeInstMatrix[currentTimeInst][j][2]+1 == nextMoveY))
+                        && (timeInstMatrix[currentTimeInst][j][2]+1 == nextMoveY))
                   {
-                        // If true we are going to collide, change direction, nextMoveX and nextMoveY
-                        changeDirection();
-                        if(exitFunc == 1) { return 0; } // exiting and not moving
-                        break;
+                     // If true we are going to collide, change direction, nextMoveX and nextMoveY
+                     changeDirection();
+                     if(exitFunc == 1) { return 0; } // exiting and not moving
+                     break;
                   }
-                } 
-               case E:
-                {  // East means adding X+1
+               } 
+            case E:
+               {  // East means adding X+1
                   if((timeInstMatrix[currentTimeInst][j][1]+1 == nextMoveX)
-                         && (timeInstMatrix[currentTimeInst][j][2] == nextMoveY))
+                        && (timeInstMatrix[currentTimeInst][j][2] == nextMoveY))
                   {
-                        // If true we are going to collide, change direction, nextMoveX and nextMoveY
-                        changeDirection();
-                        if(exitFunc == 1) { return 0; } // exiting and not moving
-                        break;
+                     // If true we are going to collide, change direction, nextMoveX and nextMoveY
+                     changeDirection();
+                     if(exitFunc == 1) { return 0; } // exiting and not moving
+                     break;
                   }
-                } 
-               case S:
-                {  // South means substracting Y-1
+               } 
+            case S:
+               {  // South means substracting Y-1
                   if((timeInstMatrix[currentTimeInst][j][1] == nextMoveX)
-                         && (timeInstMatrix[currentTimeInst][j][2]-1 == nextMoveY))
+                        && (timeInstMatrix[currentTimeInst][j][2]-1 == nextMoveY))
                   {
-                        // If true we are going to collide, change direction, nextMoveX and nextMoveY
-                        changeDirection();
-                        if(exitFunc == 1) { return 0; } // exiting and not moving
-                        break;
+                     // If true we are going to collide, change direction, nextMoveX and nextMoveY
+                     changeDirection();
+                     if(exitFunc == 1) { return 0; } // exiting and not moving
+                     break;
                   }
-                } 
+               } 
 
-            } // end switch
+         } // end switch
 
-        } // end if
+      } // end if
 
-    } // end for
-    printf("decisionMaking() correctly run\n");
+   } // end for
+   printf("decisionMaking() correctly run\n");
 
 } // end decisionMaking
 
 void static changeDirection()
 {
-    // Try E --> Try N --> Try W or Wait    
+   // Try E --> Try N --> Try W or Wait    
 
-    if(move == E)
-    { //try North
-       move = N;
-       nextMoveX = botData.botData.location.x;
-       nextMoveY = botData.botData.location.y + 1; 
-    }
-    else if (move == N)
-    { //try South 
-       move = S;
-       nextMoveX = botData.botData.location.x;
-       nextMoveY = botData.botData.location.y - 1; 
-    }
-    else
-    { // tried E,N, S, not gonna try W (going back) so just wait.
-        exitFunc = 1;      
-    }
-
-}
+   while(1)
+   {
+      if( move == E)
+      { //try North
+         if ( obstacle.N == false)
+         {
+            move = N;
+            nextMoveX = botData.botData.location.x;
+            nextMoveY = botData.botData.location.y + 1; 
+            return;
+         }
+         else
+         {
+            move = S;
+            next;
+         }
+      }
+      else if (move == N)
+      { //try South 
+         if( obstacle.S == false)
+         {
+            move = S;
+            nextMoveX = botData.botData.location.x;
+            nextMoveY = botData.botData.location.y - 1; 
+            return;
+         }
+         else
+         {
+            exitFunc = 1; 
+            return;
+         }
+      }
+      else
+      { // tried E,N, S, not gonna try W (going back) so just wait.
+         exitFunc = 1;      
+         return;
+      }
+   }
 
 
 

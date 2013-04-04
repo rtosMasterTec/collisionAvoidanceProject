@@ -58,6 +58,13 @@ typedef struct botData_s
    transmitData_t botData;
 }botData_t;
 
+typedef struct obstacle_s
+{
+   bool N;
+   bool S;
+   bool E;
+} obstacle_t;
+
 
 extern botData_t botData;
 
