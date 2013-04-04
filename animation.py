@@ -71,7 +71,7 @@ def mapLoad(screen):
       yi= yi*scale
       dx = dx*scale
       dy = dy*scale
-      pygame.draw.rect(screen, (255,0,0), pygame.Rect(xi,yi,dx,dy))
+      pygame.draw.rect(screen, (255,255,255), pygame.Rect(xi,yi,dx,dy))
 
 def simulation():
    pygame.init()
