@@ -1,6 +1,3 @@
-
-// Includes
-
 #include <stdio.h>
 #include <stdint.h>
 #include "botFunctions.h"
@@ -12,14 +9,11 @@ static void print3dArray();
 
 // Init Variables
 botData_t robotData;
-//int timeInstMatrix[TIME_INSTANTS][TOTAL_BOTS][9];
 
 int main(int argc, char **argv)
 {
-//   inputVector();
-   
    initRobot();  	
-   return 0;
+   return scheduler();
 }
 
 static void initRobot()
@@ -43,14 +37,12 @@ static void initRobot()
     
     //print something from vector to check it was read correctly
                              //[timeInst][RX][Data 0-8: Rx X Y Sp Dir ObstN ObstW ObstE ObstS]
+    printf("Check timeInst 1, R2 = %d\n", timeInstMatrix[40][1][0]);
+    printf("Check timeInst 1, X = %d\n", timeInstMatrix[40][1][1]);
+    printf("Check timeInst 1, Y = %d\n", timeInstMatrix[40][1][2]);
 
-   print3dArray();
-//    printf("Check timeInst 1, R2 = %d\n", timeInstMatrix[1][1][0]);
-//    printf("Check timeInst 1, X = %d\n", timeInstMatrix[1][1][1]);
-//    printf("Check timeInst 1, Y = %d\n", timeInstMatrix[1][1][2]);
-
-//    printf("Printing read 3d array\n");
-//    print3dArray();
+  //  printf("Printing read 3d array\n");
+   // print3dArray();
 
 }
 
@@ -60,7 +52,7 @@ static void print3dArray()
     int j = 0;
     int k = 0;
 
-    for(i = 0; i < TIME_INSTANTS; i++)
+    for(i = 0; i < TIME_INSTANTS+1; i++)
     {
         for(j = 0; j < TOTAL_BOTS; j++)
         {

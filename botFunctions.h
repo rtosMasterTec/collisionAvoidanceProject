@@ -13,7 +13,6 @@
 // these are the limits of the simulation space
 #define MAX_X 1200
 #define MAX_Y 800
-#define SIMULATION_TIME 100
 #define TOTAL_BOTS 3   
 #define TIME_INSTANTS 41
 
@@ -37,9 +36,6 @@ typedef struct botData_s
    char botName[4];
    transmitData_t botData;
 }botData_t;
-
-
-uint32_t matrixData[TOTAL_BOTS][SIMULATION_TIME];
 
 // send data to the interested listeners, position, speed, obstables, etc.
 int sendData(botData_t * botData);
