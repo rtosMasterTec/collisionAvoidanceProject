@@ -1,4 +1,5 @@
 #include "botFunctions.h"
+#include "inputVector.h"
 
 // Static Variables
 int filePos = 0;  // used to seek back to position
@@ -74,4 +75,47 @@ int receiveData(botData_t * botData)
 
 }
 
+int mcastSubscribe(int timeInst, botData_t * botData){
 
+   int j;
+   int my_coord_x;
+   int my_coord_y;
+   int coord_x;
+   int coord_y;
+
+   my_coord_x = botData->botData.location.x;
+   my_coord_y = botData->botData.location.y;
+
+   printf("My position R%d = X=%d,Y=%d\n",0 ,my_coord_x,my_coord_y);
+   for(j=1; j<= TOTAL_BOTS; j++){
+     coord_x = timeInstMatrix[timeInst][j][1];
+     coord_y = timeInstMatrix[timeInst][j][2];
+     printf("Check position of robot R%d = X=%d,Y=%d\n",j ,coord_x,coord_y);
+     if(my_coord_x - coord_x < MAX_RANGE_X){
+ 	//suscribe
+	suscribeArr[j] = 1;
+     }
+   }
+}
+
+int mcastUnSubscribe(int timeInst, botData_t * botData){
+   int j;
+   int my_coord_x;
+   int my_coord_y;
+   int coord_x;
+   int coord_y;
+
+   my_coord_x = botData->botData.location.x;
+   my_coord_y = botData->botData.location.y;
+
+   printf("My position R%d = X=%d,Y=%d\n",0 ,my_coord_x,my_coord_y);
+   for(j=1; j<= TOTAL_BOTS; j++){
+     coord_x = timeInstMatrix[timeInst][j][1];
+     coord_y = timeInstMatrix[timeInst][j][2];
+     printf("Check position of robot R%d = X=%d,Y=%d\n",j ,coord_x,coord_y);
+     if(my_coord_x - coord_x >= MAX_RANGE_X){
+        //Unsuscribe
+        suscribeArr[j] = 0;
+     }
+   }
+}

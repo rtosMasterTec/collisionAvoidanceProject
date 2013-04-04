@@ -6,7 +6,6 @@
 #include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
-
 // Data structures
 
 // assumed the bot size is 1 unit in length and width
@@ -15,6 +14,9 @@
 #define MAX_Y 800
 #define TOTAL_BOTS 3   
 #define TIME_INSTANTS 41
+#define MAX_RANGE_X 10
+
+int suscribeArr[TOTAL_BOTS];
 
 typedef struct location_s
 {
@@ -45,10 +47,10 @@ int sendData(botData_t * botData);
 int receiveData(botData_t * botData);
 
 // makes the subscriptions
-int mcastSubscribe();
+int mcastSubscribe(int timeInst, botData_t * botData);
 
 // makes the unsubscriptions
-int mcastUnSubscribe();
+int mcastUnSubscribe(int timeInst, botData_t * botData);
 
 // selects the near neighbors to subscribe to their transmitted data
 int dataSelection();
