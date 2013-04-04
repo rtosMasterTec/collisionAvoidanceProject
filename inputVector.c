@@ -132,7 +132,7 @@ void loadVector()
 
         } else {  j++; }
 
-        if(i==41) { break ; }
+        if(i==TIME_INSTANTS) { break ; }
 
 
     } // end Reading while

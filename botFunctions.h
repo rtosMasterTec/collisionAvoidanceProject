@@ -24,7 +24,7 @@
 #define MAX_X 1200
 #define MAX_Y 800
 #define TOTAL_BOTS 3   
-#define TIME_INSTANTS 41
+#define TIME_INSTANTS 61
 #define NUM_OBST 4
 #define MAX_RANGE_X 10
 #define COORD 4 // X Y X Y

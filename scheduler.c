@@ -43,7 +43,7 @@ int scheduler(void)
       {
          pth_yield(pt[i]);
       }
-      if(timeInst >=41) {return;}
+      if(timeInst >=61) {return;}
       timeInst++;// inc time to proceed to next batch of data
    }
 
