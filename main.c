@@ -34,6 +34,7 @@ static void initRobot()
    // Test sendData
    sendData(&robotData);
    loadVector();
+   //mcastSubscribe(40, &robotData);
     
     //print something from vector to check it was read correctly
                              //[timeInst][RX][Data 0-8: Rx X Y Sp Dir ObstN ObstW ObstE ObstS]
