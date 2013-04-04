@@ -7,7 +7,7 @@
 #define __SCHEDULER_H__
 
 // variables
-extern unsigned timeInst; // global to synchronize time accross tasks
+unsigned timeInst; // global to synchronize time accross tasks
 // constants
 #define MAX_THREADS 7
 

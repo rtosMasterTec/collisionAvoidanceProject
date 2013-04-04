@@ -5,10 +5,19 @@
 #include <stdint.h>
 #include <string.h>
 #include <stdio.h>
+#include <stdbool.h>
 #include <stdlib.h>
 #include "scheduler.h"
 
-// Data structures
+// Definitions
+#define N 1
+#define W 2
+#define E 3
+#define S 4
+#define R1 1
+#define R2 2
+#define R3 3
+#define R4 4
 
 // assumed the bot size is 1 unit in length and width
 // these are the limits of the simulation space
@@ -20,6 +29,10 @@
 #define MAX_RANGE_X 10
 #define COORD 4 // X Y X Y
 
+// Data structures
+
+
+extern int timeInstMatrix[TIME_INSTANTS][TOTAL_BOTS][9];  
 extern int obstacleMap[NUM_OBST][COORD];
 int subscribeArr[TOTAL_BOTS];
 
@@ -46,7 +59,7 @@ typedef struct botData_s
 }botData_t;
 
 
-//extern botData_t * botData;
+extern botData_t botData;
 
 // send data to the interested listeners, position, speed, obstables, etc.
 void* sendData(void* ptr);

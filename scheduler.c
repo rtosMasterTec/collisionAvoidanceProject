@@ -14,15 +14,15 @@ int scheduler(void)
 {
    long numthreads;
    int pth_ret;
-   timeInst = 0; // beggining at time 0
    int i;
 
+   timeInst = 0; // beggining at time 0
    pth_ret = pth_init();
    if (pth_ret != TRUE) 
    {
       fprintf(stderr, "Could not initialize GNU Pth, exiting.\n");
       return(EXIT_FAILURE);
-   }
+   } 
    pt[0] = pth_self();
    pt[1] = pth_spawn(PTH_ATTR_DEFAULT, mcastSubscribe, NULL);
    pt[2] = pth_spawn(PTH_ATTR_DEFAULT, mcastUnSubscribe, NULL);
@@ -41,6 +41,7 @@ int scheduler(void)
       {
          pth_yield(pt[i]);
       }
+      timeInst++;// inc time to proceed to next batch of data
       numthreads = pth_ctrl(PTH_CTRL_GETTHREADS_READY);
       if (numthreads == 0) 
       {

@@ -18,7 +18,7 @@ int main(int argc, char **argv)
                              //[timeInst][RX][Data 0-8: Rx X Y Sp Dir ObstN ObstW ObstE ObstS]
     printf("Check timeInst 1, R2 = %d\n", timeInstMatrix[40][1][0]);
    
-return scheduler();
+    return scheduler();
 }
 
 

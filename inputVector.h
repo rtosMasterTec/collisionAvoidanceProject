@@ -8,16 +8,7 @@
 #include <strings.h>
 #include "botFunctions.h"
 
-#define N 1
-#define W 2
-#define E 3
-#define S 4
-#define R1 1
-#define R2 2
-#define R3 3
-#define R4 4
 
-extern int timeInstMatrix[TIME_INSTANTS][TOTAL_BOTS][9];  
 
 void loadVector();
 

@@ -1,8 +1,7 @@
 #include "botFunctions.h"
-#include "inputVector.h"
 
 // Static Variables
-botData_t * botData;
+botData_t botData;
 int move = E;  // move east is defautl behavior
 int exitFunc = 0;
 int nextMoveX = 0;
@@ -16,19 +15,16 @@ int obstacleMap[NUM_OBST][COORD] =
 /* Initializes R0 starting point in the grid */
 int initRobot() 
 {
-    memset(&botData, 0, sizeof(botData_t));
 
     // Initialize robot
-printf("\n ATTN: Getting seg fault If next line is not commented\n");
-//    botData->botData.location.x = 0;
-printf("ATTN: Not getting here is previous line not commented\n");
-  /*  botData->botData.location.y = 0;
-    botData->botData.speed = 0;
-    strcpy(botData->botData.direction,"E");
-    botData->botData.obstacle[0] = 0;
-    botData->botData.obstacle[1] = 0;
-    botData->botData.obstacle[2] = 0;
-    botData->botData.obstacle[3] = 0; */
+    botData.botData.location.x = 0;
+    botData.botData.location.y = 0;
+    botData.botData.speed = 0;
+    strcpy(botData.botData.direction,"E");
+    botData.botData.obstacle[0] = 0;
+    botData.botData.obstacle[1] = 0;
+    botData.botData.obstacle[2] = 0;
+    botData.botData.obstacle[3] = 0; 
 }
  
 /* Send data to interested listeners, position, speed, obstacles */
@@ -54,21 +50,21 @@ void* sendData(void* ptr)
 
    // preapare string = posx pos y vel obstN obtsW obstE obstS
    strcpy(line,"R0");
-   snprintf(buf, sizeof(buf), " %d ", botData->botData.location.x);
+   snprintf(buf, sizeof(buf), " %d ", botData.botData.location.x);
    strcat(line, buf);
-   snprintf(buf, sizeof(buf), " %d ", botData->botData.location.y);
+   snprintf(buf, sizeof(buf), " %d ", botData.botData.location.y);
    strcat(line, buf);
-   snprintf(buf, sizeof(buf), " %d ", botData->botData.speed);
+   snprintf(buf, sizeof(buf), " %d ", botData.botData.speed);
    strcat(line, buf);
-   strcpy(line, botData->botData.direction);
+   strcpy(line, botData.botData.direction);
    strcat(line, buf);
-   snprintf(buf, sizeof(buf), " %d ", botData->botData.obstacle[0]);
+   snprintf(buf, sizeof(buf), " %d ", botData.botData.obstacle[0]);
    strcat(line, buf);
-   snprintf(buf, sizeof(buf), " %d ", botData->botData.obstacle[1]);
+   snprintf(buf, sizeof(buf), " %d ", botData.botData.obstacle[1]);
    strcat(line, buf);
-   snprintf(buf, sizeof(buf), " %d ", botData->botData.obstacle[2]);
+   snprintf(buf, sizeof(buf), " %d ", botData.botData.obstacle[2]);
    strcat(line, buf);
-   snprintf(buf, sizeof(buf), " %d ", botData->botData.obstacle[3]);
+   snprintf(buf, sizeof(buf), " %d ", botData.botData.obstacle[3]);
    strcat(line, buf);
    strcat(line, " \n");
 
@@ -108,30 +104,30 @@ void* receiveData(void *ptr)
 
 void* mcastSubscribe(void* ptr)
 {
- printf("mcastSubscribe() started\n");
-  int j;
+   printf("mcastSubscribe() started\n");
+   int j;
    int my_coord_x;
    int my_coord_y;
    int coord_x;
    int coord_y;
 
-   my_coord_x = botData->botData.location.x;
-   my_coord_y = botData->botData.location.y;
+   my_coord_x = botData.botData.location.x;
+   my_coord_y = botData.botData.location.y;
 
    printf("My position R%d = X=%d,Y=%d\n",0 ,my_coord_x,my_coord_y);
-   for(j=1; j<= TOTAL_BOTS; j++)
+   for(j=0; j< TOTAL_BOTS; j++)
    {
-     coord_x = timeInstMatrix[timeInst][j][1];
-     coord_y = timeInstMatrix[timeInst][j][2];
-     printf("Check position of robot R%d = X=%d,Y=%d\n",j ,coord_x,coord_y);
-     if(my_coord_x - coord_x < MAX_RANGE_X)
-     {
- 	//suscribe
-	subscribeArr[j] = 1;
-     }
+      coord_x = timeInstMatrix[timeInst][j][1];
+      coord_y = timeInstMatrix[timeInst][j][2];
+      printf("Check position of robot R%d = X=%d,Y=%d\n",j ,coord_x,coord_y);
+      if(my_coord_x - coord_x < MAX_RANGE_X)
+      {
+         //suscribe
+         subscribeArr[j] = 1;
+      }
    }
-    printf("mcastSubscribe() correctly run\n");
-}
+            printf("mcastSubscribe() correctly run\n");
+            }
 
 void* mcastUnSubscribe(void* ptr)
 {
@@ -142,8 +138,8 @@ void* mcastUnSubscribe(void* ptr)
    int coord_x;
    int coord_y;
 
-   my_coord_x = botData->botData.location.x;
-   my_coord_y = botData->botData.location.y;
+   my_coord_x = botData.botData.location.x;
+   my_coord_y = botData.botData.location.y;
 
    printf("My position R%d = X=%d,Y=%d\n",0 ,my_coord_x,my_coord_y);
    for(j=1; j<= TOTAL_BOTS; j++)
@@ -168,8 +164,8 @@ void* decisionMaking(void* ptr)
     int currentTimeInst = 4; // This is a global variable, will move later
     bool collision = false;
 
-    nextMoveX = botData->botData.location.x + 1;
-    nextMoveY = botData->botData.location.y;
+    nextMoveX = botData.botData.location.x + 1;
+    nextMoveY = botData.botData.location.y;
 
     // Check if obstacles are in my next move
 
@@ -232,14 +228,14 @@ void static changeDirection()
     if(move == E)
     { //try North
        move = N;
-       nextMoveX = botData->botData.location.x;
-       nextMoveY = botData->botData.location.y + 1; 
+       nextMoveX = botData.botData.location.x;
+       nextMoveY = botData.botData.location.y + 1; 
     }
     else if (move == N)
     { //try South 
        move = S;
-       nextMoveX = botData->botData.location.x;
-       nextMoveY = botData->botData.location.y - 1; 
+       nextMoveX = botData.botData.location.x;
+       nextMoveY = botData.botData.location.y - 1; 
     }
     else
     { // tried E,N, S, not gonna try W (going back) so just wait.
