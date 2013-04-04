@@ -10,7 +10,7 @@ int nextMoveY = 0;
 
 int obstacleMap[NUM_OBST][COORD] =
 {  // X  Y  X  Y 
-    {80, 50, 82, 60}, {87, 45, 88, 46} , {100, 54, 105, 55}, {122, 58, 127, 61} 
+    {80, 45, 82, 57}, {87, 45, 88, 46} , {100, 54, 105, 55}, {122, 58, 127, 61} 
 };
 
 /* Initializes R0 starting point in the grid */
@@ -18,8 +18,8 @@ int initRobot()
 {
 
     // Initialize robot
-    botData.botData.location.x = 0;
-    botData.botData.location.y = 0;
+    botData.botData.location.x = 60;
+    botData.botData.location.y = 50;
     botData.botData.speed = 0;
     strcpy(botData.botData.direction,"E");
     botData.botData.obstacle[0] = 0;
@@ -57,7 +57,7 @@ void* sendData(void* ptr)
    strcat(line, buf);
    snprintf(buf, sizeof(buf), " %d ", botData.botData.speed);
    strcat(line, buf);
-   strcpy(line, botData.botData.direction);
+   snprintf(buf, sizeof(buf), " %c ",  botData.botData.direction[0]);
    strcat(line, buf);
    snprintf(buf, sizeof(buf), " %d ", botData.botData.obstacle[0]);
    strcat(line, buf);
@@ -164,19 +164,29 @@ void* decisionMaking(void* ptr)
    if(!obstacle.e)
    {
       move = E;
+      nextMoveX  = botData.botData.location.x+1;
+      nextMoveY  = botData.botData.location.y;
    }
    else if(!obstacle.n)
    {
       move = N;
+      nextMoveX  = botData.botData.location.x;
+      nextMoveY  = botData.botData.location.y+1;
    }
    else if(!obstacle.s)
    {
       move = S;
+      nextMoveX  = botData.botData.location.x;
+      nextMoveY  = botData.botData.location.y-1;
    }
    else
    {
+      nextMoveX  = botData.botData.location.x;
+      nextMoveY  = botData.botData.location.y;
    }
 
+   // update
+   updateRobot();
    printf("decisionMaking() correctly run\n");
 
 } // end decisionMaking
@@ -276,8 +286,6 @@ void *dataProcessing(void* ptr)
 
       } // end if
 
-    // update
-    updateRobot();
 
    } // end for
     printf("dataProcessing() correctly run\n");
@@ -295,9 +303,9 @@ int updateRobot()
     botData.botData.location.x = nextMoveX;
     botData.botData.location.y = nextMoveY;
     botData.botData.speed = 0;
-    if(move == N) {  strcpy(botData.botData.direction, "N");};
-    if(move == S) {  strcpy(botData.botData.direction, "S");};
-    if(move == E) {  strcpy(botData.botData.direction, "E");};
+    if(move == N) {  botData.botData.direction[0] = 'N';};
+    if(move == S) {  botData.botData.direction[0] = 'S';};
+    if(move == E) {  botData.botData.direction[0] = 'E';};
     botData.botData.obstacle[0] = 0;
     botData.botData.obstacle[1] = 0;
     botData.botData.obstacle[2] = 0;
