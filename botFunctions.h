@@ -6,6 +6,7 @@
 #include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include "scheduler.h"
 // Data structures
 
 // assumed the bot size is 1 unit in length and width
@@ -40,26 +41,26 @@ typedef struct botData_s
 }botData_t;
 
 // send data to the interested listeners, position, speed, obstables, etc.
-int sendData(botData_t * botData);
+void* sendData(void* ptr);
 
 
 // receive data from liek  position, speed, obstables, etc from members I have subscribed
-int receiveData(botData_t * botData);
+void* receiveData(void* ptr);
 
 // makes the subscriptions
-int mcastSubscribe(int timeInst, botData_t * botData);
+void* mcastSubscribe(void* ptr);
 
 // makes the unsubscriptions
-int mcastUnSubscribe(int timeInst, botData_t * botData);
+void* mcastUnSubscribe(void* ptr);
 
 // selects the near neighbors to subscribe to their transmitted data
-int dataSelection();
+void* dataSelection(void* ptr);
 
 // process the data from selected bots
-int dataProcessing();
+void* dataProcessing(void* ptr);
 
 // makes decision based on processed data
-int decisionMaking();
+void* decisionMaking(void* ptr);
 
 
 
