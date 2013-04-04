@@ -24,29 +24,27 @@ int scheduler(void)
       return(EXIT_FAILURE);
    } 
    pt[0] = pth_self();
-   pt[1] = pth_spawn(PTH_ATTR_DEFAULT, mcastSubscribe, NULL);
-   pt[2] = pth_spawn(PTH_ATTR_DEFAULT, mcastUnSubscribe, NULL);
-   pt[3] = pth_spawn(PTH_ATTR_DEFAULT, receiveData, NULL);
-   pt[4] = pth_spawn(PTH_ATTR_DEFAULT, dataSelection, NULL);
-   pt[5] = pth_spawn(PTH_ATTR_DEFAULT, dataProcessing, NULL);
-
-   pt[6] = pth_spawn(PTH_ATTR_DEFAULT, decisionMaking, NULL);
-   pt[7] = pth_spawn(PTH_ATTR_DEFAULT, sendData, NULL);
 
 
    while (1) 
    {
       printf("yielding\n");
+
+      pt[1] = pth_spawn(PTH_ATTR_DEFAULT, mcastSubscribe, NULL);
+      pt[2] = pth_spawn(PTH_ATTR_DEFAULT, mcastUnSubscribe, NULL);
+      pt[3] = pth_spawn(PTH_ATTR_DEFAULT, receiveData, NULL);
+      pt[4] = pth_spawn(PTH_ATTR_DEFAULT, dataSelection, NULL);
+      pt[5] = pth_spawn(PTH_ATTR_DEFAULT, dataProcessing, NULL);
+
+      pt[6] = pth_spawn(PTH_ATTR_DEFAULT, decisionMaking, NULL);
+      pt[7] = pth_spawn(PTH_ATTR_DEFAULT, sendData, NULL);
+
       for(i =1; i< MAX_THREADS; i++)
       {
          pth_yield(pt[i]);
       }
+      if(timeInst >=41) {return;}
       timeInst++;// inc time to proceed to next batch of data
-      numthreads = pth_ctrl(PTH_CTRL_GETTHREADS_READY);
-      if (numthreads == 0) 
-      {
-         break;
-      }
    }
 
    return(EXIT_SUCCESS);
